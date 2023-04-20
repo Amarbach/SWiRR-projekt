@@ -1,18 +1,28 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
 
-[RequireComponent(typeof(ARTrackedImageManager))]
 public class Detect : MonoBehaviour
 {
     [SerializeField]
-    ARTrackedImageManager m_TrackedImageManager;
+    ParticleSystem particleSystem;
 
     [SerializeField]
-    ParticleSystem particleSystem;
+    ARRaycastManager raycastManager;
+    [SerializeField]
+    Camera ARCam;
+
+    [SerializeField]
+    AudioSource player;
+    [SerializeField]
+    AudioClip spellSFX;
+
+    [SerializeField]
+    Text information;
 
     private void Start()
     {
@@ -21,82 +31,37 @@ public class Detect : MonoBehaviour
 
     void Awake()
     {
-        m_TrackedImageManager = GetComponent<ARTrackedImageManager>();
+        //player = GetComponent<AudioSource>();
     }
 
-    void OnEnable()
+    private void Update()
     {
-        m_TrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
-    }
-
-    void OnDisable()
-    {
-        m_TrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
-    }
-
-
-    void UpdateInfo(ARTrackedImage trackedImage)
-    {
-
-        if (trackedImage.trackingState != TrackingState.None)
+        if(Input.touchCount > 0)
         {
-            particleSystem.Play();
-        }
-        else
-        {
-            //particleSystem.Stop();
+            
+            RaycastHit _hit;
+            Ray ray = ARCam.ScreenPointToRay(Input.GetTouch(0).position);
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                if (Physics.Raycast(ray, out _hit))
+                {
+                    if (_hit.collider.CompareTag("spellPainting1"))
+                    {
+                        player.PlayOneShot(spellSFX);
+                    }
+                }
+            }
+
         }
     }
 
-    void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
-    {
-
-        //bool isAnyTracked = (eventArgs.added.Count > 0 || eventArgs.updated.Count > 0);
-
-        foreach (var trackedImage in eventArgs.added)
-        {
-            // Give the initial image a reasonable default scale
-
-            UpdateInfo(trackedImage);
-        }
-
-        foreach (var trackedImage in eventArgs.updated)
-            UpdateInfo(trackedImage);
-    }
-    //private void Start()
+    //private void OnTriggerEnter(Collider other)
     //{
-    //    particleSystem.Stop();
+    //    
     //}
-    //void OnEnable() => m_TrackedImageManager.trackedImagesChanged += OnChanged;
-
-    //void OnDisable() => m_TrackedImageManager.trackedImagesChanged -= OnChanged;
-
-    //void OnChanged(ARTrackedImagesChangedEventArgs eventArgs)
+    //
+    //private void OnTriggerStay(Collider other)
     //{
-    //    foreach (var newImage in eventArgs.added)
-    //    {
-    //        // Handle added event
-    //        particleSystem.Play();
-    //    }
-
-    //    foreach (var updatedImage in eventArgs.updated)
-    //    {
-    //        // Handle updated event
-    //    }
-
-    //    foreach (var removedImage in eventArgs.removed)
-    //    {
-    //        // Handle removed event
-    //        particleSystem.Stop();
-    //    }
-
-    //    if(eventArgs.updated.Count > 0 || eventArgs.added.Count > 0)
-    //    {
-    //        particleSystem.Play();
-    //    }
-    //    else
-    //    {
-    //        particleSystem.Stop();
-    //    }
+    //    
     //}
 }
