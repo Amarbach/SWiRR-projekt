@@ -28,9 +28,12 @@ public class Detect : MonoBehaviour
     [SerializeField]
     Text information;
 
+    [SerializeField]
+    private BeansController beansController;
+    
     private void Start()
     {
-        
+        beansController.AddBeans();
     }
 
     void Awake()
