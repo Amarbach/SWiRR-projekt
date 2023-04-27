@@ -9,6 +9,8 @@ public class BeansController : MonoBehaviour
     #region Serialized Fields
 
     [SerializeField]
+    private Canvas canvas;
+    [SerializeField]
     private Image beanImage;
     [SerializeField]
     private TextMeshProUGUI beansText;
@@ -38,7 +40,7 @@ public class BeansController : MonoBehaviour
     {
         for (int i = 0; i < beansCount; i++)
         {
-            Image newBean = Instantiate(beanImage, spawnPoint);
+            Image newBean = Instantiate(beanImage, spawnPoint.position, Quaternion.identity, canvas.transform);
             newBean.transform.DOMove(beanImage.transform.position, 0.5f).OnComplete(()=>Destroy(newBean.gameObject));
 
             yield return new WaitForEndOfFrame();

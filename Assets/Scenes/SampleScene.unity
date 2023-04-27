@@ -950,6 +950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1dd3346d500ed43b930c989c82964b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 1124647998}
   beanImage: {fileID: 626107878}
   beansText: {fileID: 182703853}
   beansSpawnRange: {x: 1, y: 6}

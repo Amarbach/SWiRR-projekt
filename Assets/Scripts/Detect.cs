@@ -39,7 +39,7 @@ public class Detect : MonoBehaviour
 
     void OnDetect(ARTrackedImagesChangedEventArgs e)
     {
-        beansController.AddBeans();
+        
     }
 
     private void Update()
@@ -58,6 +58,7 @@ public class Detect : MonoBehaviour
                 {
                     if (_hit.collider.CompareTag("spellPainting1"))
                     {
+                        beansController.AddBeans();
                         player.PlayOneShot(spellSFX);
                     }
                 }
