@@ -30,11 +30,6 @@ public class Detect : MonoBehaviour
 
     [SerializeField]
     private BeansController beansController;
-    
-    private void Start()
-    {
-        beansController.AddBeans();
-    }
 
     void Awake()
     {
@@ -44,7 +39,7 @@ public class Detect : MonoBehaviour
 
     void OnDetect(ARTrackedImagesChangedEventArgs e)
     {
-        
+        beansController.AddBeans();
     }
 
     private void Update()

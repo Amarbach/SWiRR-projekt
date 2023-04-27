@@ -19,9 +19,18 @@ public class BeansController : MonoBehaviour
     
     #endregion
 
+    private int BeansCount { get; set; } = 0;
+    
+    private void Start()
+    {
+        beansText.text = "0";
+    }
+
     public void AddBeans()
     {
         int beansCount = Random.Range(beansSpawnRange.x, beansSpawnRange.y);
+        BeansCount += beansCount;
+        
         StartCoroutine(SpawnBeans(beansCount));
     }
 
