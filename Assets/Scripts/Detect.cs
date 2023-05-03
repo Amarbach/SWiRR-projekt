@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 
@@ -22,8 +23,7 @@ public class Detect : MonoBehaviour
 
     [SerializeField]
     AudioSource player;
-    [SerializeField]
-    AudioClip spellSFX;
+    
 
     [SerializeField]
     Text information;
@@ -31,24 +31,16 @@ public class Detect : MonoBehaviour
     [SerializeField]
     private BeansController beansController;
 
-    void Awake()
-    {
-        //player = GetComponent<AudioSource>();
-        //imageManager.trackedImagesChanged += OnDetect;
-    }
 
-    void OnDetect(ARTrackedImagesChangedEventArgs e)
+    void Awake()
     {
         
     }
 
     private void Update()
     {
-        information.text = particleSystem.isPlaying.ToString();
         if(Input.touchCount > 0)
         {
-            //if (particleSystem.isPlaying) particleSystem.Stop();
-            //else particleSystem.Play();
             RaycastHit _hit;
             Ray ray = ARCam.ScreenPointToRay(Input.GetTouch(0).position);
 
@@ -58,8 +50,13 @@ public class Detect : MonoBehaviour
                 {
                     if (_hit.collider.CompareTag("spellPainting1"))
                     {
+                        var painting = _hit.collider.gameObject.GetComponent<PaintingController>();
                         beansController.AddBeans();
-                        player.PlayOneShot(spellSFX);
+                        if (painting != null)
+                        {
+                            if (painting.SFX != null) player.PlayOneShot(painting.SFX);
+                            painting.OnEnchanted();
+                        }
                     }
                 }
             }
@@ -67,7 +64,6 @@ public class Detect : MonoBehaviour
         {
             RaycastHit _hit;
             Ray ray = new Ray(ARCam.transform.position, ARCam.transform.forward);
-            //information.text = ray.direction.ToString();
             if(Physics.Raycast(ray, out _hit))
             {
                 if (_hit.collider.CompareTag("spellPainting1"))
@@ -80,11 +76,5 @@ public class Detect : MonoBehaviour
                 if (particleSystem.isPlaying) particleSystem.Stop();
             }
         }
-        //information.text = ARCam.transform.position.ToString();
     }
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    information.text = (ARCam.transform.position - other.transform.position).ToString();
-    //}
 }
