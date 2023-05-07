@@ -68,7 +68,8 @@ public class Detect : MonoBehaviour
             {
                 if (_hit.collider.CompareTag("spellPainting1"))
                 {
-                    if (!particleSystem.isPlaying) particleSystem.Play();
+                    var painting = _hit.collider.gameObject.GetComponent<PaintingController>();
+                    if (!particleSystem.isPlaying && painting.Castable) particleSystem.Play();
                 }
             }
             else

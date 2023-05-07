@@ -8,8 +8,13 @@ public class PaintingController : MonoBehaviour
     AudioClip spellSFX;
     public AudioClip SFX { get { return spellSFX; } }
 
+    private bool castable = true;
+    public bool Castable { get { return castable; } set { castable = value; } }
+
     public void OnEnchanted()
     {
-        //coœ z obrazkiem zrobiæ jak zostanie zaczarowany?
+        castable = false;
     }
+
+
 }

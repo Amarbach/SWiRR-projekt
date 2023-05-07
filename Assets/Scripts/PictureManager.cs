@@ -11,7 +11,8 @@ public class PictureManager : MonoBehaviour
     private ARTrackedImageManager imageManager;
     [SerializeField]
     private XRReferenceImageLibrary imageLibrary;
-
+    [SerializeField]
+    private Camera ARCamera;
 
     [SerializeField]
     private Text information;
@@ -55,17 +56,19 @@ public class PictureManager : MonoBehaviour
         {
             arObjects[trackable.name].SetActive(false);
         }
-        information.text = args.removed.Count.ToString();
     }
 
     private void UpdateImage(ARTrackedImage image)
     {
-        if(arObjects != null)
+        if (arObjects != null)
         {
             var curObj = arObjects[image.referenceImage.name];
+            var painting = curObj.GetComponentInChildren<PaintingController>();
             curObj.SetActive(image.trackingState == TrackingState.Tracking);
+            if (image.trackingState != TrackingState.Tracking && !painting.Castable) painting.Castable = true;
             curObj.transform.position = image.transform.position;
-            //information.text = image.transform.rotation.x.ToString() + ":" + image.transform.rotation.y.ToString() + ":" + image.transform.rotation.z.ToString() + ":" + image.transform.rotation.w.ToString();
+            curObj.transform.LookAt(ARCamera.transform.position);
+            curObj.transform.Rotate(new Vector3(0, 180, 0));
         }
     }
 }
