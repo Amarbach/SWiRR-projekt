@@ -479,7 +479,6 @@ MonoBehaviour:
   origin: {fileID: 1310660492}
   imageManager: {fileID: 1310660491}
   player: {fileID: 223974228}
-  spellSFX: {fileID: 8300000, guid: 96ff617a3883c4440a7b4f38b9aebb87, type: 3}
   information: {fileID: 470000064}
   beansController: {fileID: 699529860}
 --- !u!135 &223974230
@@ -522,12 +521,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1124647995}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 550.5, y: 306}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &302288714
@@ -847,7 +846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.7678805, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1027,9 +1026,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1124647998}
   beanImage: {fileID: 626107878}
+  whiteBean: {fileID: 7109088703583038961, guid: 963a8ab5ad653324896884d9637d326a, type: 3}
   beansText: {fileID: 182703853}
   beansSpawnRange: {x: 1, y: 6}
   spawnPoint: {fileID: 224834947}
+  beanColorsList:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0.9197526, b: 0, a: 1}
+  - {r: 0.26842916, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0.5897913, a: 1}
+  - {r: 0, g: 0.7743149, b: 1, a: 1}
+  - {r: 0, g: 0.12644672, b: 1, a: 1}
+  - {r: 0.69945145, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0.5309949, a: 1}
+  - {r: 1, g: 0.53481376, b: 0, a: 1}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,6 +1166,7 @@ RectTransform:
   - {fileID: 648755167}
   - {fileID: 699529858}
   - {fileID: 40919615}
+  - {fileID: 224834947}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

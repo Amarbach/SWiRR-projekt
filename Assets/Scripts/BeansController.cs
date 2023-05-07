@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -13,12 +14,16 @@ public class BeansController : MonoBehaviour
     [SerializeField]
     private Image beanImage;
     [SerializeField]
+    private Image whiteBean;
+    [SerializeField]
     private TextMeshProUGUI beansText;
     [SerializeField]
     private Vector2Int beansSpawnRange;
     [SerializeField]
     private Transform spawnPoint;
-    
+    [SerializeField]
+    private List<Color> beanColorsList;
+
     #endregion
 
     private int BeansCount { get; set; } = 0;
@@ -31,8 +36,7 @@ public class BeansController : MonoBehaviour
     public void AddBeans()
     {
         int beansCount = Random.Range(beansSpawnRange.x, beansSpawnRange.y);
-        BeansCount += beansCount;
-        
+
         StartCoroutine(SpawnBeans(beansCount));
     }
 
@@ -40,11 +44,31 @@ public class BeansController : MonoBehaviour
     {
         for (int i = 0; i < beansCount; i++)
         {
-            Image newBean = Instantiate(beanImage, spawnPoint.position, Quaternion.identity, canvas.transform);
-            newBean.transform.DOMove(beanImage.transform.position, 0.5f).OnComplete(()=>Destroy(newBean.gameObject));
+            Image newBean = Instantiate(whiteBean, spawnPoint.position, Quaternion.identity, canvas.transform);
+            newBean.rectTransform.localScale = Vector3.zero;
+            
+            int colorIndex = Random.Range(0, beanColorsList.Count);
+            newBean.color = beanColorsList[colorIndex];
 
-            yield return new WaitForEndOfFrame();
+            Sequence sequence = DOTween.Sequence();
+            sequence.Join(newBean.transform.DOScale(Vector3.one, 0.2f));
+            sequence.Append(newBean.transform.DOMove(beanImage.transform.position, 0.4f));
+            sequence.Append(newBean.transform.DOScale(Vector3.zero, 0.2f));
+            sequence.OnComplete(() =>
+                                {
+                                    UpdateBeansCount();
+                                    Destroy(newBean.gameObject);
+                                });
+            
+
+            yield return new WaitForSeconds(0.3f);
         }
+    }
+
+    private void UpdateBeansCount()
+    {
+        BeansCount++;
+        beansText.text = BeansCount.ToString();
     }
 
 }
